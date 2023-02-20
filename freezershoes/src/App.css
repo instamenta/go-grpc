@@ -2,6 +2,17 @@
   margin: 0;
   box-sizing: border-box;
 }
+:root {
+  font-size: 16px;
+  font-family: Helvetica, Sans-Serif;
+  --dark-purple: rgb(46,20,64);
+  --mid-purple: rgb(69,47,88);
+  --bright-purple: rgb(80,60,129);
+  --gray-blue: rgb(70,129,121);
+  --bright-blue: rgb(14,189,175);
+  --bright-gray: rgb(238,238, 238);
+  --dark-gray: rgb(51,51,51);
+}
 html {
   font-size: 62.5%;
 }
