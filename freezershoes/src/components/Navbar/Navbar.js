@@ -9,7 +9,7 @@ export const Navbar = () => {
     // const [logInfo, setLogInfo] = useState(false)
     // const [userId, setUserId] = useState('')
     // const [userName, setUserName] = useState('')
-    
+
     // useEffect(() => {
     //     const [cookieName, cookieValue] = document.cookie.split('=')
     //     const userDataJSON = localStorage.getItem('userData')
@@ -41,8 +41,125 @@ export const Navbar = () => {
     // }
     return (
         <nav className="nav-component">
-            {/* <Link to="/" className="brand"></Link> */}
+            <ul className="nav-list">
+                <li className="nav-item" id="nav-logo">
+                    <Link to="/" className="nav-link">
 
+                        <i className="fa-brands fa-react"></i>
+                        <span className="nav-text">
+                            TestTest
+                        </span>
+
+                    </Link>
+                </li>
+                <li className="nav-item">
+                    <Link to="/" className="nav-link">
+
+                        <i className="fa-solid fa-gamepad"></i>
+                        <span className="nav-text">
+                        TestTest
+                        </span>
+
+                    </Link>
+                </li>
+                <li className="nav-item">
+                    <Link to="/" className="nav-link">
+
+                        <i className="fa-solid fa-right-to-bracket"></i>
+                        <span className="nav-text">
+                        TestTest
+                        </span>
+
+                    </Link>
+                </li>
+                <li className="nav-item">
+                    <Link to="/" className="nav-link">
+
+                        <i className="fa-solid fa-user-plus"></i>
+                        <span className="nav-text">
+                        TestTest
+                        </span>
+
+                    </Link>
+                </li>
+                <li className="nav-item">
+                    <Link to="/" className="nav-link">
+
+                        <i className="fa-solid fa-user-large"></i>
+                        <span className="nav-text">
+                        TestTest
+                        </span>
+
+                    </Link>
+                </li>
+                {/* contacts and useful links */}
+
+
+            </ul>
+            <ul className="contacts-list">
+                <li className="contacts">
+                    <Link to="/" className="contacts-link">
+
+                        <i className="fa-solid fa-file-pdf"></i>
+                        <span className="contacts-text">
+                        TestTest
+                        </span>
+
+                    </Link>
+                </li>
+                <li className="contacts">
+                    <Link to="/" className="contacts-link">
+
+                        <i className="fa-solid fa-square-envelope"></i>
+                        <span className="contacts-text">
+                        TestTest
+                        </span>
+
+                    </Link>
+                </li>
+
+                <li className="contacts">
+                    <Link to="/" className="contactsnav-link">
+
+                        <i className="fa-solid fa-map-location-dot"></i>
+                        <span className="contacts-text">
+                        TestTest
+                        </span>
+
+                    </Link>
+                </li>
+
+                <li className="contacts">
+                    <Link to="/" className="contacts-link">
+
+                        <i className="fa-brands fa-square-github"></i>
+                        <span className="contacts-text">
+                        TestTest
+                        </span>
+
+                    </Link>
+                </li>
+                <li className="contacts">
+                    <Link to="/" className="contacts-link">
+
+                        <i className="fa-brands fa-linkedin"></i>
+                        <span className="contacts-text">
+                        TestTest
+                        </span>
+
+                    </Link>
+                </li>
+                <li className="contacts">
+                    <Link to="/" className="contacts-link">
+                        
+                        <i className="fa-solid fa-mobile-button"></i>
+                        <span className="contacts-text">
+                        TestTest
+                        </span>
+
+                    </Link>
+                </li>
+            </ul>
         </nav>
     )
 }
