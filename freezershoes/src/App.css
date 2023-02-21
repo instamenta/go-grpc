@@ -12,6 +12,7 @@
   --bright-blue: rgb(14,189,175);
   --bright-gray: rgb(238,238, 238);
   --dark-gray: rgb(51,51,51);
+  --transition-speed: 400ms;
 }
 body {
   font-size: 1.6rem;
