@@ -1,0 +1,20 @@
+.catalog-welcome-container {
+    width: 100vh - 5rem;
+    height: auto;
+
+    max-height: 55vh;
+    overflow: hidden;
+
+    background-image: url('./nike-logo-hd3.gif');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size:cover;
+    border-bottom: 4px solid black;
+}
+.catalog-welcome-img {
+    width: 100%;
+    height: auto;
+    max-height: 60vh;
+    user-select: none;
+    position:static;
+}

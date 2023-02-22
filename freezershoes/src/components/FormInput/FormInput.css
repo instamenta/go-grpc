@@ -1,0 +1,51 @@
+.formInput{ 
+    display: flex;
+    flex-direction: column;
+    width: 280px;
+    min-width: 280px;
+
+}
+input.auth-input{
+    padding: 15px;
+    margin: 10px 0px;
+    border-radius: 10px 0px;
+    border-top: 3px black outset;
+    border-left: 3px black outset;
+    border-right: 3px black outset;
+    border-bottom: 3px black outset;
+    transition: all 400ms ease;
+
+}
+input.auth-input:hover {
+    box-shadow: 2px 2px 1px rgb(104, 123, 127);
+    transform:  scaleX(1.2);
+}
+input.auth-input:focus {
+    box-shadow: 2px 2px 1px rgb(104, 123, 127);
+    transform:  scaleX(1.2);
+    
+}
+label.input-label {
+    font-size: 16px;
+    color: white;
+    user-select: none;
+    font-weight: 600;
+}
+span.error-span {
+    font-size: 14px;
+    padding: 3px;
+    color: rgb(0, 247, 255);
+    display: none;
+    user-select: none;
+    transition: all 300ms ease;
+}
+span.error-span:hover {
+    transform: scale(1.2);
+    color: white;
+}
+input.auth-input:invalid[focused="true"] {
+    border: 1px solid rgb(0, 247, 255);
+}
+input.auth-input:invalid[focused="true"] ~ span {
+    display: block;
+}

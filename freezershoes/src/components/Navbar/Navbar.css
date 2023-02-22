@@ -1,5 +1,4 @@
 .navbar {
-    position: fixed;
     background-color: rgb(51,51,51);
     transition: width 600ms ease;
     overflow: hidden;
@@ -103,11 +102,16 @@
 /* Small screens */
 @media only screen and (max-width: 600px) {
     .navbar {
-        bottom: 0;
+        top: 0;
         width: 100vw;
         height: 5rem;
-    }
+        position: fixed;
+    position:static;
 
+    }
+    main.main {
+        margin-left:0rem;
+    }
     .logo {
         display: none;
     }
@@ -129,10 +133,16 @@
 @media only screen and (min-width: 600px) {
     .navbar {
         top: 0;
+        left: 0;
         width: 5rem;
         height: 100vh;
-    }
+    position:fixed;
 
+    }
+    main.main {
+        margin-left:5rem;
+      
+      }
     .navbar:hover {
         width: 16rem;
     }
