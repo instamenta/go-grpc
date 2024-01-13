@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package chat;
+
+option go_package = "chat/";
+
+import "google/protobuf/wrappers.proto";
+
+service ChatService {
+  rpc CreateUser(CreateUserRequest) returns (Empty);
+  rpc GetUser(GetById) returns (User);
+  rpc SendMessage (Message) returns (Empty);
+  rpc GetMultipleUsers(Pagination) returns (stream User);
+  rpc SendMultipleMessages(stream Message) returns (Empty);
+  rpc GetMessages(GetMessagesRequest) returns (stream Message);
+}
+
+message CreateUserRequest {
+  google.protobuf.StringValue name = 1;
+}
+
+message Pagination {
+  google.protobuf.Int32Value skip = 1;
+  google.protobuf.Int32Value limit = 2;
+}
+
+message GetById {
+  google.protobuf.StringValue id = 1;
+}
+
+message GetMessagesRequest {
+  google.protobuf.StringValue sender = 1;
+  google.protobuf.StringValue recipient = 2;
+  google.protobuf.Int32Value skip = 3;
+  google.protobuf.Int32Value limit = 4;
+}
+
+message User {
+  google.protobuf.StringValue id = 1;
+  google.protobuf.StringValue name = 2;
+}
+
+message Message {
+  google.protobuf.StringValue sender = 1;
+  google.protobuf.StringValue recipient = 2;
+  google.protobuf.StringValue content = 3;
+
+  enum MessageStatus {
+    SEEN = 0;
+    SEND = 1;
+    PENDING = 2;
+  }
+  MessageStatus message_status = 12 [json_name = "message_status"];
+}
+
+message Empty{}
+
