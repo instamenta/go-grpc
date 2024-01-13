@@ -6,8 +6,12 @@ import (
 	"io"
 	"log"
 	"net"
+	"net/http"
+	"strings"
 
 	wp "github.com/golang/protobuf/ptypes/wrappers"
+	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
+	_ "github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -195,6 +199,7 @@ func (s *server) CreateUser(ctx context.Context, req *pb.CreateUserRequest) (*pb
 }
 
 func main() {
+	//* MONGO
 	serverAPI := options.ServerAPI(options.ServerAPIVersion1)
 	dbOpts := options.
 		Client().
@@ -214,6 +219,8 @@ func main() {
 		panic(err)
 	}
 	log.Println("Successfully connected to MongoDB! Starting grpc server...")
+
+	// Grpc Server
 	lis, _ := net.Listen("tcp", fmt.Sprintf("localhost:%d", 50051))
 	var opts []grpc.ServerOption
 	grpcServer := grpc.NewServer(opts...)
@@ -222,9 +229,41 @@ func main() {
 		messagesRepo: repositories.GetMessagesRepository(db),
 		usersRepo:    repositories.GetUsersRepository(db),
 	})
-	if err := grpcServer.Serve(lis); err != nil {
-		log.Fatalf("Failed to server gRPC server over port 9000: %v", err)
-	} else {
-		log.Println("The server is up and running")
+
+	// gRPC gateway
+	gwmux := runtime.NewServeMux()
+	optsGateway := []grpc.DialOption{grpc.WithInsecure()}
+	err = pb.RegisterChatServiceHandlerFromEndpoint(context.TODO(), gwmux, fmt.Sprintf("localhost:%d", 50051), optsGateway)
+	if err != nil {
+		log.Fatalf("Failed to register gateway: %v", err)
 	}
+
+	// HTTP server
+	httpServer := &http.Server{
+		Addr:    ":8081",
+		Handler: grpcHandlerFunc(grpcServer, gwmux),
+	}
+
+	// Start servers
+	go func() {
+		log.Printf("gRPC server listening on %s", lis.Addr())
+		if err := grpcServer.Serve(lis); err != nil {
+			log.Fatalf("Failed to serve gRPC server: %v", err)
+		}
+	}()
+
+	log.Printf("gRPC gateway listening on %s", httpServer.Addr)
+	if err := httpServer.ListenAndServe(); err != nil {
+		log.Fatalf("Failed to serve gRPC gateway: %v", err)
+	}
+}
+
+func grpcHandlerFunc(grpcServer *grpc.Server, other http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if strings.HasPrefix(r.Header.Get("Content-Type"), "application/grpc") {
+			grpcServer.ServeHTTP(w, r)
+		} else {
+			other.ServeHTTP(w, r)
+		}
+	})
 }

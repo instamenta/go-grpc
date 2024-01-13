@@ -5,14 +5,41 @@ package chat;
 option go_package = "chat/";
 
 import "google/protobuf/wrappers.proto";
+import "google/api/annotations.proto";
 
 service ChatService {
-  rpc CreateUser(CreateUserRequest) returns (Empty);
-  rpc GetUser(GetById) returns (User);
-  rpc SendMessage (Message) returns (Empty);
-  rpc GetMultipleUsers(Pagination) returns (stream User);
-  rpc SendMultipleMessages(stream Message) returns (Empty);
-  rpc GetMessages(GetMessagesRequest) returns (stream Message);
+  rpc CreateUser(CreateUserRequest) returns (Empty) {
+    option (google.api.http) = {
+      post: "/v1/user",
+      body: "name",
+    };
+  }
+  rpc GetUser(GetById) returns (User) {
+    option (google.api.http) = {
+      get: "/v1/user/{id}",
+    };
+  };
+  rpc SendMessage(Message) returns (Empty) {
+    option (google.api.http) = {
+      post: "/v1/messages/{sender}/{recipient}",
+      body: "content"
+    };
+  };
+  rpc GetMultipleUsers(Pagination) returns (stream User) {
+    option (google.api.http) = {
+      get: "/v1/messages",
+    };
+  };
+  rpc SendMultipleMessages(stream Message) returns (Empty) {
+    option (google.api.http) = {
+      post: "/deprecated",
+    };
+  };
+  rpc GetMessages(GetMessagesRequest) returns (stream Message) {
+    option (google.api.http) = {
+      get: "/v1/messages/{sender}/{recipient}",
+    };
+  };
 }
 
 message CreateUserRequest {
